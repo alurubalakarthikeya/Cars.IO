@@ -57,39 +57,28 @@ window.addEventListener('scroll', () => {
   navToggle.addEventListener("click", () => {
     navMenu.classList.toggle("show");
   });
-  document.addEventListener("DOMContentLoaded", function () {
-    const loginForm = document.getElementById("loginForm");
-    if (!loginForm) {
-      console.error("Login form not found in DOM!");
-      return;
-    }
-  
-    loginForm.addEventListener("submit", async function (e) {
-      e.preventDefault();
-      console.log("Login form submitted");
-  
-      const username = document.getElementById("username").value;
-      const password = document.getElementById("password").value;
-  
-      try {
-        const response = await fetch("/login", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ username, password }),
-        });
-  
-        const msg = await response.text();
-  
-        if (response.ok) {
-          alert("Login successful!");
-          window.location.href = "/home";
-        } else {
-          alert(msg);
-        }
-      } catch (err) {
-        console.error("Login error:", err);
-        alert("Something went wrong.");
+  document.addEventListener("submit", function (e) {
+  if (e.target && e.target.classList.contains("login-form")) {
+    e.preventDefault();
+    const username = document.querySelector(".login-form input[type='text']").value;
+    const password = document.querySelector(".login-form input[type='password']").value;
+
+    fetch("/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ username, password })
+    })
+    .then(res => {
+      if (res.ok) return res.json();
+      else throw new Error("Invalid credentials");
+    })
+    .then(data => {
+      if (data.success) {
+        window.location.href = "/home";
       }
+    })
+    .catch(err => {
+      alert(err.message);
     });
-  });
-  
+  }
+});

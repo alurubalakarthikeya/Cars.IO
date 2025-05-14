@@ -4,80 +4,86 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 
 const app = express();
+const PORT = 3000;
+const SECRET = 'cario_super_secret_token';
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// Session setup
+// Sessions
 app.use(
   session({
-    secret: 'cario_secret_key',
+    secret: 'cario_session_secret',
     resave: false,
     saveUninitialized: false,
-    cookie: { secure: false } // set to true if using HTTPS
+    cookie: { secure: false, httpOnly: true }
   })
 );
 
-// Serve static files only from /public (except protected routes)
-app.use(express.static(path.join(__dirname, 'public')));
+// Serve static assets except private HTML
+app.use(express.static(path.join(__dirname, 'public'), {
+  index: false // disables default index.html being exposed
+}));
 
-// Database setup
+// MySQL setup
 const db = mysql.createConnection({
   host: 'localhost',
   user: 'root',
-  password: 'root123',
+  password: 'root123', // change if needed
   database: 'cario_db'
 });
 
 db.connect(err => {
   if (err) throw err;
-  console.log('MySQL connected!');
+  console.log('✅ MySQL connected!');
 });
 
-// Login route
+// Login Route
 app.post('/login', (req, res) => {
   const { username, password } = req.body;
+
   db.query('SELECT * FROM users WHERE username = ?', [username], async (err, results) => {
-    if (err) return res.status(500).send('DB error');
+    if (err) return res.status(500).send('Database error');
     if (results.length === 0) return res.status(401).send('Invalid credentials');
 
-    const match = await bcrypt.compare(password, results[0].password);
-    if (match) {
-      req.session.user = { id: results[0].id, username: results[0].username };
-      res.send('Login successful!');
+    const user = results[0];
+
+    if (password === user.password) {
+      // Token creation
+      const token = jwt.sign({ id: user.id, username: user.username }, SECRET, { expiresIn: '1h' });
+      req.session.user = { id: user.id, username: user.username };
+      res.json({ message: 'Login successful', token });
     } else {
       res.status(401).send('Invalid credentials');
     }
   });
 });
 
-// Logout route
+// Middleware to protect routes
+function isAuthenticated(req, res, next) {
+  if (req.session.user) return next();
+  return res.redirect('/');
+}
+
+// Home Page (protected)
+app.get('/home', isAuthenticated, (req, res) => {
+  res.sendFile(path.join(__dirname, 'private', 'home.html'));
+});
+
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
+
+// Logout
 app.post('/logout', (req, res) => {
   req.session.destroy(err => {
-    if (err) return res.status(500).send('Could not logout');
+    if (err) return res.status(500).send('Logout failed');
     res.send('Logged out');
   });
 });
 
-// Protected route: serve home.html only if logged in
-app.get('/home', (req, res) => {
-  if (req.session.user) {
-    res.sendFile(path.join(__dirname, 'public', 'home.html'));
-  } else {
-    res.redirect('/');
-  }
-});
-
-// Register route
-app.post('/register', async (req, res) => {
-  const { username, password } = req.body;
-  const hashed = await bcrypt.hash(password, 10);
-  db.query('INSERT INTO users (username, password) VALUES (?, ?)', [username, hashed], (err) => {
-    if (err) return res.status(500).send('Username already exists');
-    res.send('User registered!');
-  });
-});
-
-app.listen(3000, () => console.log('Server running at http://localhost:3000'));
+app.listen(PORT, () => console.log(`🚗 Car.IO running at http://localhost:${PORT}`));
