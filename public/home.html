@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Car.IO | Home</title>
+  <link rel="stylesheet" href="home.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+  <div class="home-container">
+    <nav class="sidebar">
+      <div class="nav-header">
+        <h2>Car.IO</h2>
+        <button class="nav-toggle" id="navToggle"><i class="fa-solid fa-bars"></i></button>
+      </div>
+      <ul id="navMenu">
+        <li class="active">My Cars</li>
+        <li>Add Car</li>
+        <li>Profile</li>
+        <li>Logout</li>
+      </ul>
+      <div class="sidebar-socials">
+        <p>Connect with us</p>
+        <div class="social-icons">
+          <a href="#"><i class="fab fa-twitter"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-linkedin"></i></a>
+          <a href="#"><i class="fab fa-github"></i></a>
+        </div>
+      </div>
+      
+    </nav>
+    <div class="side-by-side">
+      <div class="main-content">
+        <div class="header info-box">
+          <div class="greeting-text">
+            <h1>Welcome back, <span class="username">Carty</span>!</h1>
+            <p>Here’s your live car stock summary. Stay on track!</p>
+          </div>
+          <div class="greeting-stats">
+            <p><i class="fa-solid fa-car"></i> <strong>10</strong> Models</p>
+            <p><i class="fa-solid fa-boxes-stacked"></i> <strong>128</strong> In Stock</p>
+          </div>
+        </div>
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Car Name</th>
+                <th>Model</th>
+                <th>Year</th>
+                <th>Price</th>
+                <th>Stock</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                  <td data-label="Car Name">Tesla</td>
+                  <td data-label="Model">Model 3</td>
+                  <td data-label="Year">2023</td>
+                  <td data-label="Price">$48,490</td>
+                  <td data-label="Stock">15</td>
+                </tr>
+                <tr>
+                  <td data-label="Car Name">BMW</td>
+                  <td data-label="Model">X5</td>
+                  <td data-label="Year">2021</td>
+                  <td data-label="Price">$60,000</td>
+                  <td data-label="Stock">7</td>
+                </tr>
+                <tr>
+                  <td data-label="Car Name">Audi</td>
+                  <td data-label="Model">A4</td>
+                  <td data-label="Year">2022</td>
+                  <td data-label="Price">$42,000</td>
+                  <td data-label="Stock">12</td>
+                </tr>
+                <tr>
+                  <td data-label="Car Name">Ford</td>
+                  <td data-label="Model">Mustang</td>
+                  <td data-label="Year">2023</td>
+                  <td data-label="Price">$55,300</td>
+                  <td data-label="Stock">5</td>
+                </tr>
+                <tr>
+                  <td data-label="Car Name">Toyota</td>
+                  <td data-label="Model">Camry</td>
+                  <td data-label="Year">2020</td>
+                  <td data-label="Price">$27,000</td>
+                  <td data-label="Stock">20</td>
+                </tr>
+                <tr>
+                  <td data-label="Car Name">Mercedes-Benz</td>
+                  <td data-label="Model">C-Class</td>
+                  <td data-label="Year">2022</td>
+                  <td data-label="Price">$44,850</td>
+                  <td data-label="Stock">8</td>
+                </tr>
+                <tr>
+                  <td data-label="Car Name">Hyundai</td>
+                  <td data-label="Model">Ioniq 5</td>
+                  <td data-label="Year">2023</td>
+                  <td data-label="Price">$41,450</td>
+                  <td data-label="Stock">10</td>
+                </tr>
+                <tr>
+                  <td data-label="Car Name">Kia</td>
+                  <td data-label="Model">EV6</td>
+                  <td data-label="Year">2023</td>
+                  <td data-label="Price">$48,700</td>
+                  <td data-label="Stock">6</td>
+                </tr>
+                <tr>
+                  <td data-label="Car Name">Chevrolet</td>
+                  <td data-label="Model">Silverado</td>
+                  <td data-label="Year">2021</td>
+                  <td data-label="Price">$39,100</td>
+                  <td data-label="Stock">11</td>
+                </tr>
+                <tr>
+                  <td data-label="Car Name">Nissan</td>
+                  <td data-label="Model">Altima</td>
+                  <td data-label="Year">2022</td>
+                  <td data-label="Price">$26,000</td>
+                  <td data-label="Stock">14</td>
+                </tr>              
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="side-info">
+        <div class="info-card glass-box">
+          <h3>Quick Stats</h3>
+          <p><strong>Total Stock:</strong> 128</p>
+          <p><strong>Total Worth:</strong> $432,890</p>
+          <p><strong>Top Model:</strong> BMW X5</p>
+          <p><strong>Most Expensive:</strong> $60,000</p>
+          <p><strong>Most Affordable:</strong> $26,000</p>
+          <button class="add-car-btn">+ Add New Car</button>
+        </div><br>
+        <div class="info-card">
+          <div class="quick-filters">
+            <h3>Quick Filters</h3>
+            <button class="filter-btn">Electric</button>
+            <button class="filter-btn">SUV</button>
+            <button class="filter-btn">2023 Models</button>
+          </div>
+          <div class="low-stock">
+            <h4>Low Stock Alerts</h4>
+            <ul>
+              <li>⚠ Ford Mustang (5 left)</li>
+              <li>⚠ Kia EV6 (6 left)</li>
+            </ul>
+          </div>
+          <div class="recommendations">
+            <h4>Recommended for You</h4>
+            <ul>
+              <li>Tesla Model Y <i class="fa-solid fa-fire blue"></i></li>
+              <li>BMW i4 <i class="fa-solid fa-fire blue"></i></li>
+              <li>Toyota Corolla <i class="fa-solid fa-fire blue"></i></li>
+            </ul>
+          </div>  
+        </div>                      
+      </div>
+    </div>
+  </div>
+<script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,257 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
+:root {
+  --primary-color: #0b78d8;
+  --secondary-color: #2ecc71;
+  --background-color: #ffffff;
+  --text-color: #2c3e50;
+  --font-color-light: #ffffff;
+  --primary-font: "Raleway", sans-serif;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+  width: 100%;
+  font-family: var(--primary-font);
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
+.logo {
+    font-size: 3vh;
+    color: var(--background-color);
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    top: 20px;
+    left: 35px;
+    width: 84%;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px); 
+    border-radius: 15px;
+    padding: 10px;
+    border: 1px solid rgba(87, 149, 255, 0.5);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    position: fixed;
+}
+
+#car {
+    position: absolute;
+    left: 88px;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: left 0.1s linear;
+    font-size: 2vh;
+    color: white;
+}
+
+.logo i {
+    font-size: 2.3vh;
+}
+
+.main-screen {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+}
+
+.left-half {
+  width: 55%;
+  height: 100vh;
+  background: url('bg.jpg') no-repeat center center/cover;
+  color: var(--font-color-light);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: left;
+  padding: 60px;
+}
+
+.welcome-text {
+    font-size: 2.5vh;
+    max-width: 470px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px); 
+    -webkit-backdrop-filter: blur(10px); 
+    border-radius: 15px;
+    padding: 30px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
+  }
+
+.welcome-text h1 {
+  margin-bottom: 20px;
+}
+
+.welcome-text p {
+  margin-bottom: 10px;
+}
+
+.welcome-text h3 {
+  margin-top: 30px;
+}
+
+.social-icons {
+  margin-top: 15px;
+}
+
+.social-icons i {
+  margin-right: 10px;
+  font-size: 20px;
+  cursor: pointer;
+  padding: 7px;
+}
+
+.right-half {
+  width: 45%;
+  height: 100vh;
+  background-color: var(--background-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-form {
+  width: 100%;
+  max-width: 370px;
+  padding: 35px;
+  background-color: var(--background-color);
+  box-shadow: 0 0 20px rgba(92, 157, 255, 0.3);
+  border: 0.001px solid var(--primary-color);
+  border-radius: 12px;
+  color: var(--text-color);
+}
+
+.login-form h2 {
+  color: var(--primary-color);
+  margin-bottom: 25px;
+}
+
+.login-form label {
+  display: block;
+  margin-top: 15px;
+  font-weight: 600;
+}
+
+.login-form input {
+  width: 100%;
+  padding: 10px;
+  color: var(--primary-color);
+  font-family: var(--primary-font);
+  margin: 15px 0;
+  border: 1px solid var(--primary-color);
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+.login-form input:focus {
+  outline: none;
+  font-family: var(--primary-font);
+  color: var(--primary-color);
+  border-color: var(--primary-color);
+  box-shadow: 0 0 10px rgba(92, 157, 255, 0.5);
+}
+
+.login-form button {
+  width: 100%;
+  margin: 20px 0;
+  padding: 14px;
+  border: none;
+  background-color: var(--primary-color);
+  color: var(--font-color-light);
+  font-weight: bold;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.2s ease;
+  font-family: var(--primary-font);
+}
+
+.login-form button:hover {
+    box-shadow: 0 0 10px rgba(92, 157, 255, 0.5);
+}
+
+.yes-sir {
+    padding: 10px;
+    font-size: 1.8vh;
+}
+
+.yes-sir a {
+    color: var(--primary-color);
+    text-decoration: none;
+    margin-bottom: 10px; 
+}
+
+.glass-box {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    padding: 40px;
+    color: var(--font-color-light);
+    box-shadow: 0 0 25px rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    outline: 2px solid transparent;
+    outline-offset: -4px;
+    background-clip: padding-box;
+}
+  
+.social-icons i:hover {
+  color: var(--primary-color);
+  text-shadow: 0 0 10px var(--primary-color);
+  transform: scale(1.1);
+  transition: all 0.3s ease;
+}
+
+.glass-box {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 1s ease-out forwards;
+  }
+  
+  @keyframes fadeInUp {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+@media (max-width: 768px) {
+  .logo {
+    display: block;
+  }
+  .main-screen {
+    flex-direction: column;
+  }
+
+  .left-half, .right-half {
+    width: 100%;
+    height: auto;
+  }
+
+  .left-half {
+    padding: 30px;
+  }
+
+  .right-half {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .login-form {
+    margin: 40px 0;
+    max-width: 90%;
+    padding: 20px;
+  }
+
+  .welcome-text {
+    margin-top: 66px;
+  }
+}
