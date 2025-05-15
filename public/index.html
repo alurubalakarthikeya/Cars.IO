@@ -25,12 +25,12 @@
           </div>
         </div>
         <div class="right-half">
-          <form class="login-form" id="loginForm">
+          <form class="login-form" id="loginForm" action="/auth" method="POST">
             <h2>Login Car.IO</h2>
             <label>Username:</label>
-            <input type="text" id="username" required />
+            <input type="text" name="username" id="username" required />
             <label>Password:</label>
-            <input type="password" id="password" required/>
+            <input type="password" name="password" id="password" required />
             <p class="yes-sir"><a href="reset-password.html">Forgot password</a></p>
             <button type="submit">Login</button>
             <p class="yes-sir">Don't have an account? <a href="#" id="showRegister">Register here</a></p>

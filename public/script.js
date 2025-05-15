@@ -4,14 +4,14 @@ document.addEventListener("click", function (e) {
   if (e.target && e.target.id === "showRegister") {
     e.preventDefault();
     loginForm.innerHTML = `
-      <form class="register-form">
+      <form action="/register" method="POST" class="register-form">
         <h2>Register for Car.IO</h2>
         <label>Username:</label>
-        <input type="text" required />
+        <input name="username" type="text" required />
         <label>Email:</label>
         <input type="email" required />
         <label>Password:</label>
-        <input type="password" required />
+        <input name="password" type="password" required />
         <label>Confirm Password:</label>
         <input type="password" required />
         <button type="submit">Register</button>
@@ -57,32 +57,8 @@ window.addEventListener('scroll', () => {
   navToggle.addEventListener("click", () => {
     navMenu.classList.toggle("show");
   });
-  document.addEventListener("submit", function (e) {
-  if (e.target && e.target.classList.contains("login-form")) {
-    e.preventDefault();
-    const username = document.querySelector(".login-form input[type='text']").value;
-    const password = document.querySelector(".login-form input[type='password']").value;
 
-    fetch("/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username, password })
-    })
-    .then(res => {
-      if (res.ok) return res.json();
-      else throw new Error("Invalid credentials");
-    })
-    .then(data => {
-      if (data.success) {
-        window.location.href = "/home";
-      }
-    })
-    .catch(err => {
-      alert(err.message);
-    });
-  }
-});
-
+  
 document.getElementById("openModalBtn").addEventListener("click", () => {
   document.getElementById("carModal").classList.remove("hidden");
 });
@@ -213,3 +189,21 @@ document.addEventListener("click", function (e) {
     deleteAccountModal.classList.add("hidden");
   }
 });
+
+// Inside your dynamic form submit handler in script.js
+const formData = {
+  username: document.querySelector('#reg-username').value,
+  password: document.querySelector('#reg-password').value
+};
+
+fetch('/register', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify(formData)
+})
+.then(response => response.text())
+.then(data => {
+  alert(data); 
+})
+.catch(error => console.error('Error:', error));
+
