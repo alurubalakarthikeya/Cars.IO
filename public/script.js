@@ -122,9 +122,9 @@ const profileHTML = `
         <div class="profile-section">
           <h3>Login History</h3>
           <ul class="profile-list">
-            <li>May 13, 2025 - New York, NY</li>
-            <li>May 11, 2025 - Mobile App</li>
-            <li>May 10, 2025 - Los Angeles, CA</li>
+            <li>May 13, 2025 - Bangalore, KA, IND</li>
+            <li>May 11, 2025 - Chennai, TN, IND</li>
+            <li>May 10, 2025 - Hyderabad, TG, IND</li>
           </ul>
         </div>
         <div class="profile-section">
@@ -133,6 +133,7 @@ const profileHTML = `
           <button class="profile-btn danger">Delete Account</button>
         </div>
       </div>
+
     `;
 
     const carTableHTML = `
@@ -181,3 +182,34 @@ const profileHTML = `
     window.onload = () => {
       document.getElementById("mainContentArea").innerHTML = carTableHTML;
     };
+
+    // Modal references
+const changePasswordModal = document.getElementById("changePasswordModal");
+const deleteAccountModal = document.getElementById("deleteAccountModal");
+
+document.addEventListener("click", function (e) {
+  // Change Password
+  if (e.target.textContent.includes("Change Password")) {
+    changePasswordModal.classList.remove("hidden");
+  }
+
+  // Delete Account
+  if (e.target.textContent.includes("Delete Account")) {
+    deleteAccountModal.classList.remove("hidden");
+  }
+
+  // Close buttons
+  if (e.target.id === "closeChangePasswordModal") {
+    changePasswordModal.classList.add("hidden");
+  }
+
+  if (e.target.id === "closeDeleteAccountModal" || e.target.id === "cancelDelete") {
+    deleteAccountModal.classList.add("hidden");
+  }
+
+  // Confirm delete
+  if (e.target.id === "confirmDelete") {
+    alert("Account deleted. (You can add backend logic here)");
+    deleteAccountModal.classList.add("hidden");
+  }
+});
