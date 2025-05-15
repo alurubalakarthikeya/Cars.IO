@@ -492,5 +492,111 @@
   filter: drop-shadow(0 3px 10px rgba(255, 255, 255, 0.5));
 }
 
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.1); /* Lighter transparent layer */
+  backdrop-filter: blur(10px); /* Frosted blur */
+  -webkit-backdrop-filter: blur(10px); /* For Safari */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
 
-  
+.hidden {
+  display: none;
+}
+
+.modal-content {
+  background-color: white;
+  padding: 30px;
+  border-radius: 16px;
+  width: 400px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.modal-content h2 {
+  color: #007bff;
+  margin-bottom: 20px;
+}
+
+.modal-content label {
+  display: block;
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+.modal-content input {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+.close {
+  float: right;
+  font-size: 24px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.profile-container {
+  padding: 20px;
+  background: white;
+  border-radius: 15px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.profile-section {
+  margin-top: 20px;
+}
+
+.profile-btn {
+  padding: 10px 15px;
+  margin: 5px 10px 5px 0;
+  background-color: #007BFF;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-family: var(--primary-font);
+}
+
+.profile-btn.danger {
+  background-color: #e74c3c;
+}
+
+.profile-section {
+  margin-bottom: 20px;
+}
+
+.profile-section p {
+  padding: 5px;
+}
+
+.profile-section h3 {
+  margin-bottom: 8px;
+  color: #333;
+}
+
+.profile-list {
+  list-style: none;
+  padding-left: 0;
+  font-size: 0.95rem;
+}
+
+.profile-list li {
+  padding: 4px 0;
+  border-bottom: 1px solid #eee;
+}
+
+  .sidebar a.active {
+  background-color: #1665d8;
+  color: white;
+}
