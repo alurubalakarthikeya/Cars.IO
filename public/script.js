@@ -4,14 +4,14 @@ document.addEventListener("click", function (e) {
   if (e.target && e.target.id === "showRegister") {
     e.preventDefault();
     loginForm.innerHTML = `
-      <form action="/register" method="POST" class="register-form">
+      <form action="/signup" method="POST" class="register-form">
         <h2>Register for Car.IO</h2>
         <label>Username:</label>
-        <input name="username" type="text" required />
+        <input name="username" type="text" id="reg-username" required />
         <label>Email:</label>
         <input type="email" required />
         <label>Password:</label>
-        <input name="password" type="password" required />
+        <input name="password" type="password" id="reg-password" required />
         <label>Confirm Password:</label>
         <input type="password" required />
         <button type="submit">Register</button>
@@ -196,7 +196,7 @@ const formData = {
   password: document.querySelector('#reg-password').value
 };
 
-fetch('/register', {
+fetch('/signup', {
   method: 'POST',
   headers: { 'Content-Type': 'application/json' },
   body: JSON.stringify(formData)

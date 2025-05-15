@@ -69,43 +69,31 @@ app.listen(3000, () => {
   console.log('Server running on http://localhost:3000');
 });
 
-const bcrypt = require('bcryptjs');
-const saltRounds = 10;
+app.use(bodyParser.json()); // to parse JSON bodies from fetch
+app.use(bodyParser.urlencoded({ extended: true })); // for form submissions
 
-app.post('/register', (req, res) => {
-  const { username, password } = req.body;
+app.post('/signup', (req, res) => {
+  const { username, password } = req.body; // this works if bodyParser.json() middleware is set
 
-  if (!username || !password) {
-    return res.status(400).send('Please provide username and password');
-  }
-
-  // Check if username already exists
-  db.query('SELECT * FROM users WHERE username = ?', [username], (err, results) => {
-    if (err) {
-      console.error(err);
-      return res.status(500).send('Database error');
-    }
-
-    if (results.length > 0) {
-      return res.status(409).send('Username already taken');
-    }
-
-    // Hash password
-    bcrypt.hash(password, saltRounds, (err, hash) => {
+  if (username && password) {
+    db.query('SELECT * FROM users WHERE username = ?', [username], (err, results) => {
       if (err) {
-        console.error(err);
-        return res.status(500).send('Hashing error');
+        console.error('DB error:', err);
+        return res.status(500).send('Database error');
       }
-
-      // Insert user with hashed password
-      db.query('INSERT INTO users (username, password) VALUES (?, ?)', [username, hash], (err) => {
-        if (err) {
-          console.error(err);
-          return res.status(500).send('Error registering user');
-        }
-
-        res.send('Registration successful');
-      });
+      if (results.length > 0) {
+        return res.send('Username already taken');
+      } else {
+        db.query('INSERT INTO users (username, password) VALUES (?, ?)', [username, password], (err) => {
+          if (err) {
+            console.error('DB insert error:', err);
+            return res.status(500).send('Database error');
+          }
+          return res.send('User registered successfully!');
+        });
+      }
     });
-  });
+  } else {
+    res.send('Please enter Username and Password');
+  }
 });
