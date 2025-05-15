@@ -444,6 +444,29 @@
     .sidebar-socials{
       display: none;
     }
+
+    .modal{
+      width: 90%;
+      padding: 20px;
+    }
+
+    .add-car-btn{
+      width: 100%;
+    }
+
+    .profile-btn{
+      width: 100%;
+    }
+
+    .side-info{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .info-card{
+      width: 90%;
+    }
   }
 
 .table-container tbody::-webkit-scrollbar {

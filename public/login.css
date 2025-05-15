@@ -122,8 +122,8 @@ html, body {
   max-width: 370px;
   padding: 35px;
   background-color: var(--background-color);
-  box-shadow: 0 0 20px rgba(92, 157, 255, 0.3);
-  border: 0.1px solid rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(0, 0, 0, 0.3);
   border-radius: 12px;
   color: var(--text-color);
 }
