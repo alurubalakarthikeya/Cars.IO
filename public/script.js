@@ -103,67 +103,81 @@ document.querySelectorAll(".openModalBtn").forEach(button => {
   });
 });
 
-// Save original car table HTML (on load)
-const carTableHTML = document.getElementById("carTable").outerHTML;
-
 const profileHTML = `
-  <div class="profile-container info-box">
-    <h2>Your Profile</h2>
+      <div class="profile-container info-box">
+        <h2>Your Profile</h2>
+        <div class="profile-section">
+          <p><strong>Username:</strong> Carty</p>
+          <p><strong>Email:</strong> carty@example.com</p>
+          <p><strong>Member Since:</strong> Jan 12, 2024</p>
+        </div>
+        <div class="profile-section">
+          <h3>Recent Activity</h3>
+          <ul class="profile-list">
+            <li>Added Ford Mustang - May 11, 2025</li>
+            <li>Deleted Honda Civic - May 9, 2025</li>
+            <li>Updated BMW X5 - May 6, 2025</li>
+          </ul>
+        </div>
+        <div class="profile-section">
+          <h3>Login History</h3>
+          <ul class="profile-list">
+            <li>May 13, 2025 - New York, NY</li>
+            <li>May 11, 2025 - Mobile App</li>
+            <li>May 10, 2025 - Los Angeles, CA</li>
+          </ul>
+        </div>
+        <div class="profile-section">
+          <h3>Account</h3>
+          <button class="profile-btn">Change Password</button>
+          <button class="profile-btn danger">Delete Account</button>
+        </div>
+      </div>
+    `;
 
-    <div class="profile-section">
-      <p><strong>Username:</strong> Carty</p>
-      <p><strong>Email:</strong> carty@example.com</p>
-      <p><strong>Member Since:</strong> Jan 12, 2024</p>
-    </div>
+    const carTableHTML = `
+      <div class="table-container" id="carTable">
+        <table>
+          <thead>
+            <tr>
+              <th>Car Name</th>
+              <th>Model</th>
+              <th>Year</th>
+              <th>Price</th>
+              <th>Stock</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Tesla</td><td>Model 3</td><td>2023</td><td>$48,490</td><td>15</td></tr>
+            <tr><td>BMW</td><td>X5</td><td>2021</td><td>$60,000</td><td>7</td></tr>
+            <tr><td>Audi</td><td>A4</td><td>2022</td><td>$42,000</td><td>12</td></tr>
+            <tr><td>Ford</td><td>Mustang</td><td>2023</td><td>$55,300</td><td>5</td></tr>
+            <tr><td>Toyota</td><td>Camry</td><td>2020</td><td>$27,000</td><td>20</td></tr>
+            <tr><td>Mercedes-Benz</td><td>C-Class</td><td>2022</td><td>$44,850</td><td>8</td></tr>
+            <tr><td>Hyundai</td><td>Ioniq 5</td><td>2023</td><td>$41,450</td><td>10</td></tr>
+            <tr><td>Kia</td><td>EV6</td><td>2023</td><td>$48,700</td><td>6</td></tr>
+            <tr><td>Chevrolet</td><td>Silverado</td><td>2021</td><td>$39,100</td><td>11</td></tr>
+            <tr><td>Nissan</td><td>Altima</td><td>2022</td><td>$26,000</td><td>14</td></tr>
+          </tbody>
+        </table>
+      </div>
+    `;
 
-    <div class="profile-section">
-      <h3>Recent Activity</h3>
-      <ul class="profile-list">
-        <li>Added Ford Mustang - May 11, 2025</li>
-        <li>Deleted Honda Civic - May 9, 2025</li>
-        <li>Updated BMW X5 - May 6, 2025</li>
-      </ul>
-    </div>
+    function setActive(navId) {
+      document.querySelectorAll("#navMenu li").forEach(li => li.classList.remove("active"));
+      document.getElementById(navId).classList.add("active");
+    }
 
-    <div class="profile-section">
-      <h3>Login History</h3>
-      <ul class="profile-list">
-        <li>May 13, 2025 - New York, NY</li>
-        <li>May 11, 2025 - Mobile App</li>
-        <li>May 10, 2025 - Los Angeles, CA</li>
-      </ul>
-    </div>
+    document.getElementById("navProfile").addEventListener("click", () => {
+      document.getElementById("mainContentArea").innerHTML = profileHTML;
+      setActive("navProfile");
+    });
 
-    <div class="profile-section">
-      <h3>Account</h3>
-      <button class="profile-btn">Change Password</button>
-      <button class="profile-btn danger">Delete Account</button>
-    </div>
-  </div>
-`;
+    document.getElementById("navMyCars").addEventListener("click", () => {
+      document.getElementById("mainContentArea").innerHTML = carTableHTML;
+      setActive("navMyCars");
+    });
 
-
-document.getElementById("navProfile").addEventListener("click", () => {
-  document.getElementById("mainView").innerHTML = profileHTML;
-});
-
-document.getElementById("navMyCars").addEventListener("click", () => {
-  document.getElementById("mainView").innerHTML = carTableHTML;
-});
-
-function setActive(navId) {
-  document.querySelectorAll("#navMenu li").forEach(li => li.classList.remove("active"));
-  document.getElementById(navId).classList.add("active");
-}
-
-document.getElementById("navProfile").addEventListener("click", () => {
-  document.getElementById("mainView").innerHTML = profileHTML;
-  setActive("navProfile");
-});
-
-document.getElementById("navMyCars").addEventListener("click", () => {
-  document.getElementById("mainView").innerHTML = carTableHTML;
-  setActive("navMyCars");
-});
-
-
+    window.onload = () => {
+      document.getElementById("mainContentArea").innerHTML = carTableHTML;
+    };

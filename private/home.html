@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Car.IO | Home</title>
   <link rel="stylesheet" href="home.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter&family=Montserrat&family=Raleway&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
   <div class="home-container">
@@ -16,10 +16,10 @@
         <button class="nav-toggle" id="navToggle"><i class="fa-solid fa-bars"></i></button>
       </div>
       <ul id="navMenu">
-        <li class="active">My Cars</li>
+        <li id="navMyCars" class="active">My Cars</li>
         <li id="openModalBtn">Add Car</li>
         <li id="navProfile">Profile</li>
-        <li>Logout</li>
+        <li id="logoutBtn">Logout</li>
       </ul>
       <div class="sidebar-socials">
         <p>Connect with us</p>
@@ -31,30 +31,33 @@
         </div>
       </div>
     </nav>
+
+    <!-- Add Car Modal -->
     <div id="carModal" class="modal hidden">
-  <div class="modal-content">
-    <span id="closeModalBtn" class="close">&times;</span>
-    <h2>Add New Car</h2>
-    <form id="addCarForm">
-      <label>Car Name</label>
-      <input type="text" name="carName" required />
+      <div class="modal-content">
+        <span id="closeModalBtn" class="close">&times;</span>
+        <h2>Add New Car</h2>
+        <form id="addCarForm">
+          <label>Car Name</label>
+          <input type="text" name="carName" required />
 
-      <label>Model</label>
-      <input type="text" name="model" required />
+          <label>Model</label>
+          <input type="text" name="model" required />
 
-      <label>Year</label>
-      <input type="number" name="year" required />
+          <label>Year</label>
+          <input type="number" name="year" required />
 
-      <label>Price</label>
-      <input type="text" name="price" required />
+          <label>Price</label>
+          <input type="text" name="price" required />
 
-      <label>Stock</label>
-      <input type="number" name="stock" required />
+          <label>Stock</label>
+          <input type="number" name="stock" required />
 
-      <button type="submit" class="add-car-btn openModalBtn">Add Car</button>
-    </form>
-  </div>
-</div>
+          <button type="submit" class="add-car-btn openModalBtn">Add Car</button>
+        </form>
+      </div>
+    </div>
+
     <div class="side-by-side">
       <div class="main-content">
         <div class="header info-box">
@@ -68,91 +71,9 @@
           </div>
         </div>
         <div id="mainView">
-        <div class="table-container" id="carTable">
-          <table>
-            <thead>
-              <tr>
-                <th>Car Name</th>
-                <th>Model</th>
-                <th>Year</th>
-                <th>Price</th>
-                <th>Stock</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                  <td data-label="Car Name">Tesla</td>
-                  <td data-label="Model">Model 3</td>
-                  <td data-label="Year">2023</td>
-                  <td data-label="Price">$48,490</td>
-                  <td data-label="Stock">15</td>
-                </tr>
-                <tr>
-                  <td data-label="Car Name">BMW</td>
-                  <td data-label="Model">X5</td>
-                  <td data-label="Year">2021</td>
-                  <td data-label="Price">$60,000</td>
-                  <td data-label="Stock">7</td>
-                </tr>
-                <tr>
-                  <td data-label="Car Name">Audi</td>
-                  <td data-label="Model">A4</td>
-                  <td data-label="Year">2022</td>
-                  <td data-label="Price">$42,000</td>
-                  <td data-label="Stock">12</td>
-                </tr>
-                <tr>
-                  <td data-label="Car Name">Ford</td>
-                  <td data-label="Model">Mustang</td>
-                  <td data-label="Year">2023</td>
-                  <td data-label="Price">$55,300</td>
-                  <td data-label="Stock">5</td>
-                </tr>
-                <tr>
-                  <td data-label="Car Name">Toyota</td>
-                  <td data-label="Model">Camry</td>
-                  <td data-label="Year">2020</td>
-                  <td data-label="Price">$27,000</td>
-                  <td data-label="Stock">20</td>
-                </tr>
-                <tr>
-                  <td data-label="Car Name">Mercedes-Benz</td>
-                  <td data-label="Model">C-Class</td>
-                  <td data-label="Year">2022</td>
-                  <td data-label="Price">$44,850</td>
-                  <td data-label="Stock">8</td>
-                </tr>
-                <tr>
-                  <td data-label="Car Name">Hyundai</td>
-                  <td data-label="Model">Ioniq 5</td>
-                  <td data-label="Year">2023</td>
-                  <td data-label="Price">$41,450</td>
-                  <td data-label="Stock">10</td>
-                </tr>
-                <tr>
-                  <td data-label="Car Name">Kia</td>
-                  <td data-label="Model">EV6</td>
-                  <td data-label="Year">2023</td>
-                  <td data-label="Price">$48,700</td>
-                  <td data-label="Stock">6</td>
-                </tr>
-                <tr>
-                  <td data-label="Car Name">Chevrolet</td>
-                  <td data-label="Model">Silverado</td>
-                  <td data-label="Year">2021</td>
-                  <td data-label="Price">$39,100</td>
-                  <td data-label="Stock">11</td>
-                </tr>
-                <tr>
-                  <td data-label="Car Name">Nissan</td>
-                  <td data-label="Model">Altima</td>
-                  <td data-label="Year">2022</td>
-                  <td data-label="Price">$26,000</td>
-                  <td data-label="Stock">14</td>
-                </tr>              
-            </tbody>
-          </table>
-        </div>
+          <div id="mainContentArea">
+            <!-- This content will get replaced dynamically -->
+          </div>
         </div>
       </div>
       <div class="side-info">
