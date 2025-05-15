@@ -17,8 +17,8 @@
       </div>
       <ul id="navMenu">
         <li class="active">My Cars</li>
-        <li>Add Car</li>
-        <li>Profile</li>
+        <li id="openModalBtn">Add Car</li>
+        <li id="navProfile">Profile</li>
         <li>Logout</li>
       </ul>
       <div class="sidebar-socials">
@@ -30,8 +30,31 @@
           <a href="#"><i class="fab fa-github"></i></a>
         </div>
       </div>
-      
     </nav>
+    <div id="carModal" class="modal hidden">
+  <div class="modal-content">
+    <span id="closeModalBtn" class="close">&times;</span>
+    <h2>Add New Car</h2>
+    <form id="addCarForm">
+      <label>Car Name</label>
+      <input type="text" name="carName" required />
+
+      <label>Model</label>
+      <input type="text" name="model" required />
+
+      <label>Year</label>
+      <input type="number" name="year" required />
+
+      <label>Price</label>
+      <input type="text" name="price" required />
+
+      <label>Stock</label>
+      <input type="number" name="stock" required />
+
+      <button type="submit" class="add-car-btn openModalBtn">Add Car</button>
+    </form>
+  </div>
+</div>
     <div class="side-by-side">
       <div class="main-content">
         <div class="header info-box">
@@ -44,7 +67,8 @@
             <p><i class="fa-solid fa-boxes-stacked"></i> <strong>128</strong> In Stock</p>
           </div>
         </div>
-        <div class="table-container">
+        <div id="mainView">
+        <div class="table-container" id="carTable">
           <table>
             <thead>
               <tr>
@@ -129,6 +153,7 @@
             </tbody>
           </table>
         </div>
+        </div>
       </div>
       <div class="side-info">
         <div class="info-card glass-box">
@@ -138,7 +163,7 @@
           <p><strong>Top Model:</strong> BMW X5</p>
           <p><strong>Most Expensive:</strong> $60,000</p>
           <p><strong>Most Affordable:</strong> $26,000</p>
-          <button class="add-car-btn">+ Add New Car</button>
+          <button class="add-car-btn openModalBtn" id="openModalBtn">+ Add New Car</button>
         </div><br>
         <div class="info-card">
           <div class="quick-filters">
@@ -166,6 +191,6 @@
       </div>
     </div>
   </div>
-<script src="script.js"></script>
+<script src="/public/script.js"></script>
 </body>
 </html>
