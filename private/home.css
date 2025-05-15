@@ -483,13 +483,13 @@
 
 .sidebar-socials a {
   color: white;
-  font-size: 2.5vh;
+  font-size: 2.8vh;
   transition: 0.4s;
 }
 
 .sidebar-socials a:hover {
   transform: scale(1.2);
-  filter: drop-shadow(0 3px 10px rgba(255, 255, 255, 0.5));
+  filter: drop-shadow(0 4px 10px rgba(255, 255, 255, 0.8));
 }
 
 .modal {
@@ -568,8 +568,21 @@
   font-family: var(--primary-font);
 }
 
+.profile-btn:hover {
+  background-color: #0056b3;
+  transition: all 0.3s;
+}
+
 .profile-btn.danger {
   background-color: #e74c3c;
+  border: 1px solid #e74c3c;
+  transition: all 0.3s;
+}
+
+.profile-btn.danger:hover {
+  color: #e74c3c;
+  background-color: var(--background-color);
+  border: 1px solid #e74c3c;
 }
 
 .profile-section {
