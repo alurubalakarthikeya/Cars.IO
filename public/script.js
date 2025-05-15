@@ -129,7 +129,7 @@ const profileHTML = `
         </div>
         <div class="profile-section">
           <h3>Account</h3>
-          <button class="profile-btn">Change Password</button>
+          <button class="add-car-btn">Change Password</button>
           <button class="profile-btn danger">Delete Account</button>
         </div>
       </div>
