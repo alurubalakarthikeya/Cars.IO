@@ -82,3 +82,88 @@ window.addEventListener('scroll', () => {
     });
   }
 });
+
+document.getElementById("openModalBtn").addEventListener("click", () => {
+  document.getElementById("carModal").classList.remove("hidden");
+});
+
+document.getElementById("closeModalBtn").addEventListener("click", () => {
+  document.getElementById("carModal").classList.add("hidden");
+});
+
+document.getElementById("addCarForm").addEventListener("submit", (e) => {
+  e.preventDefault();
+  console.log("Car added!");
+  document.getElementById("carModal").classList.add("hidden");
+});
+
+document.querySelectorAll(".openModalBtn").forEach(button => {
+  button.addEventListener("click", () => {
+    document.getElementById("carModal").classList.remove("hidden");
+  });
+});
+
+// Save original car table HTML (on load)
+const carTableHTML = document.getElementById("carTable").outerHTML;
+
+const profileHTML = `
+  <div class="profile-container info-box">
+    <h2>Your Profile</h2>
+
+    <div class="profile-section">
+      <p><strong>Username:</strong> Carty</p>
+      <p><strong>Email:</strong> carty@example.com</p>
+      <p><strong>Member Since:</strong> Jan 12, 2024</p>
+    </div>
+
+    <div class="profile-section">
+      <h3>Recent Activity</h3>
+      <ul class="profile-list">
+        <li>Added Ford Mustang - May 11, 2025</li>
+        <li>Deleted Honda Civic - May 9, 2025</li>
+        <li>Updated BMW X5 - May 6, 2025</li>
+      </ul>
+    </div>
+
+    <div class="profile-section">
+      <h3>Login History</h3>
+      <ul class="profile-list">
+        <li>May 13, 2025 - New York, NY</li>
+        <li>May 11, 2025 - Mobile App</li>
+        <li>May 10, 2025 - Los Angeles, CA</li>
+      </ul>
+    </div>
+
+    <div class="profile-section">
+      <h3>Account</h3>
+      <button class="profile-btn">Change Password</button>
+      <button class="profile-btn danger">Delete Account</button>
+    </div>
+  </div>
+`;
+
+
+document.getElementById("navProfile").addEventListener("click", () => {
+  document.getElementById("mainView").innerHTML = profileHTML;
+});
+
+document.getElementById("navMyCars").addEventListener("click", () => {
+  document.getElementById("mainView").innerHTML = carTableHTML;
+});
+
+function setActive(navId) {
+  document.querySelectorAll("#navMenu li").forEach(li => li.classList.remove("active"));
+  document.getElementById(navId).classList.add("active");
+}
+
+document.getElementById("navProfile").addEventListener("click", () => {
+  document.getElementById("mainView").innerHTML = profileHTML;
+  setActive("navProfile");
+});
+
+document.getElementById("navMyCars").addEventListener("click", () => {
+  document.getElementById("mainView").innerHTML = carTableHTML;
+  setActive("navMyCars");
+});
+
+
