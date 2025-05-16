@@ -1,5 +1,4 @@
 const loginForm = document.getElementById("loginForm");
-
 document.addEventListener("click", function (e) {
   if (e.target && e.target.id === "showRegister") {
     e.preventDefault();
@@ -24,13 +23,13 @@ document.addEventListener("click", function (e) {
     e.preventDefault();
     loginForm.innerHTML = `
       <h2>Login Car.IO</h2>
-  <label>Username:</label>
-  <input type="text" id="username" required />
-  <label>Password:</label>
-  <input type="password" id="password" required />
-  <p class="yes-sir"><a href="reset-password.html">Forgot password?</a></p>
-  <button type="submit">Login</button>
-  <p class="yes-sir">Don't have an account? <a href="#" id="showRegister">Register here</a></p>
+      <label>Username:</label>
+      <input type="text" id="username" required />
+      <label>Password:</label>
+      <input type="password" id="password" required />
+      <p class="yes-sir"><a href="reset-password.html">Forgot password?</a></p>
+      <button type="submit">Login</button>
+      <p class="yes-sir">Don't have an account? <a href="#" id="showRegister">Register here</a></p>
     `;
   }
 });
@@ -105,11 +104,10 @@ const profileHTML = `
         </div>
         <div class="profile-section">
           <h3>Account</h3>
-          <button class="add-car-btn">Change Password</button>
-          <button class="profile-btn danger">Delete Account</button>
+          <button class="add-car-btn" id="changePasswordBtn">Change Password</button>
+          <button class="profile-btn danger" id="deleteAccountBtn">Delete Account</button>
         </div>
       </div>
-
     `;
 
     const carTableHTML = `
@@ -159,51 +157,40 @@ const profileHTML = `
       document.getElementById("mainContentArea").innerHTML = carTableHTML;
     };
 
-    // Modal references
-const changePasswordModal = document.getElementById("changePasswordModal");
-const deleteAccountModal = document.getElementById("deleteAccountModal");
-
-document.addEventListener("click", function (e) {
-  // Change Password
-  if (e.target.textContent.includes("Change Password")) {
-    changePasswordModal.classList.remove("hidden");
-  }
-
-  // Delete Account
-  if (e.target.textContent.includes("Delete Account")) {
-    deleteAccountModal.classList.remove("hidden");
-  }
-
-  // Close buttons
-  if (e.target.id === "closeChangePasswordModal") {
-    changePasswordModal.classList.add("hidden");
-  }
-
-  if (e.target.id === "closeDeleteAccountModal" || e.target.id === "cancelDelete") {
-    deleteAccountModal.classList.add("hidden");
-  }
-
-  // Confirm delete
-  if (e.target.id === "confirmDelete") {
-    alert("Account deleted. (You can add backend logic here)");
-    deleteAccountModal.classList.add("hidden");
-  }
-});
-
-// Inside your dynamic form submit handler in script.js
-const formData = {
-  username: document.querySelector('#reg-username').value,
-  password: document.querySelector('#reg-password').value
-};
-
-fetch('/signup', {
-  method: 'POST',
-  headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify(formData)
-})
-.then(response => response.text())
-.then(data => {
-  alert(data); 
-})
-.catch(error => console.error('Error:', error));
-
+  const changePasswordModal = document.getElementById("changePasswordModal");
+  const deleteAccountModal = document.getElementById("deleteAccountModal");
+  
+  document.addEventListener("click", function (e) {
+    if (e.target.id === "changePasswordBtn") {
+      changePasswordModal.classList.remove("hidden");
+    }
+    if (e.target.id === "deleteAccountBtn") {
+      deleteAccountModal.classList.remove("hidden");
+    }
+    if (e.target.id === "closeChangePasswordModal") {
+      changePasswordModal.classList.add("hidden");
+    }
+    if (e.target.id === "closeDeleteAccountModal" || e.target.id === "cancelDelete") {
+      deleteAccountModal.classList.add("hidden");
+    }
+    if (e.target.id === "confirmDelete") {
+      alert("Account deleted. (You can add backend logic here)");
+      deleteAccountModal.classList.add("hidden");
+    }
+  });
+  
+  const formData = {
+    username: document.querySelector('#reg-username').value,
+    password: document.querySelector('#reg-password').value
+  };
+  
+  fetch('/signup', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(formData)
+  })
+  .then(response => response.text())
+  .then(data => {
+    alert(data); 
+  })
+  .catch(error => console.error('Error:', error));
