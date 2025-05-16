@@ -97,3 +97,15 @@ app.post('/signup', (req, res) => {
     res.send('Please enter Username and Password');
   }
 });
+
+app.get('/profile', (req, res) => {
+  if (req.session.loggedin) {
+    res.json({
+      username: req.session.username,
+      email: `${req.session.username.toLowerCase()}@example.com`,
+      memberSince: 'Jan 12, 2024' // You can make this dynamic if stored in DB
+    });
+  } else {
+    res.status(401).json({ error: 'Unauthorized' });
+  }
+});
