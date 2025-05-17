@@ -7,18 +7,14 @@
 - **Frontend:** HTML, CSS, JavaScript  
 - **Backend:** Node.js, Express.js  
 - **Database:** MySQL  
-- **Authentication:** express-session, bcrypt  
-- **UI Design:** Pure CSS + Font Awesome  
 - **Deployment:** (Under Development)
 
 ## Features:
 
- 👾 **Login & Secure Register** – Session-based login with bcrypt password hashing  
+ 👾 **Login & Secure Register** – Session-based login    
  🌳 **Live Dashboard** – View your car inventory and key stats in real time  
- 🕊️ **Glassmorphism UI** – Modern, clean, and responsive interface  
  🫧 **Add / Edit / Delete Cars** – Manage your car data with ease  
  🎨 **Profile Management** – Includes login history, recent actions, and more  
- 🍀 **Table Pagination** – Shows only 10 entries at a time for cleaner UI  
  🌐 **Responsive Design** – Works across all devices  
  🍄 **Access Control** – Routes like `/home` protected by login session
 
