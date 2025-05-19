@@ -2,32 +2,27 @@ use carsdb;
 CREATE TABLE IF NOT EXISTS users (
   id INT AUTO_INCREMENT PRIMARY KEY,
   username VARCHAR(100) NOT NULL UNIQUE,
-  password VARCHAR(100) NOT NULL
+  password VARCHAR(100) NOT NULL,
+  email VARCHAR(255) DEFAULT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
-ALTER TABLE users ADD COLUMN email VARCHAR(255);
-INSERT INTO users (username, password) VALUES ('admin', 'admin123');
-INSERT INTO users (username, password) VALUES ('1', '1');
-update users set email = 'test@gmail.com' where username='1';
+describe users;
 select * from users;
-ALTER TABLE users ADD COLUMN created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP;
-
-
+update users set created_at = CURRENT_TIMESTAMP;
 
 CREATE TABLE IF NOT EXISTS cars (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  name VARCHAR(100) NOT NULL,
+  car_id INT AUTO_INCREMENT PRIMARY KEY,
   model VARCHAR(100) NOT NULL,
+  brand VARCHAR(100) NOT NULL,
   year INT,
-  user_id INT,
-  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+  mileage INT DEFAULT 0,
+  color VARCHAR(50),
+  price DECIMAL(10, 2),
+  stock INT DEFAULT 0
 );
-select * from cars ;
-delete from cars where car_id=14;
-DESCRIBE cars;
-ALTER TABLE cars ADD COLUMN stock INT DEFAULT 0;
-UPDATE cars SET stock = 11 WHERE car_id = 8;
-delete from cars where car_id=9;
 
+describe cars;
+select * from cars ;
 ALTER TABLE cars AUTO_INCREMENT = 9;
 
 
@@ -38,23 +33,10 @@ CREATE TABLE IF NOT EXISTS user_cars (
   FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
   FOREIGN KEY (car_id) REFERENCES cars(car_id) ON DELETE CASCADE
 );
-
-INSERT INTO user_cars (user_id, car_id)
-SELECT 1, car_id FROM cars;
-
--- Assign all cars currently owned by user 1 also to user 2
-INSERT INTO user_cars (user_id, car_id)
-SELECT 2, car_id FROM user_cars WHERE user_id = 1;
-
-insert into user_cars(user_id,car_id) values (2,1),(2,2),(2,3),(2,4),(2,5),(2,6);
-
-select * from user_cars;
+describe user_cars;
 
 
-ALTER TABLE cars DROP FOREIGN KEY fk_user;
-ALTER TABLE cars DROP COLUMN user_id;
 
-SELECT username, email, created_at FROM users WHERE id = 2;
 
 
 -- Users table
