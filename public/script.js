@@ -177,48 +177,52 @@ async function loadUserCars() {
     if (!res.ok) {
         document.getElementById("mainContentArea").innerHTML =
             "<p>Please login to see your cars.</p>";
+        document.getElementById("totalModels").innerText = "0";
+        document.getElementById("totalStock").innerText = "0";
         return;
     }
 
-    const cars = await res.json();
+    const data = await res.json();
 
-    if (cars.length === 0) {
+    if (!data.cars || data.cars.length === 0) {
         document.getElementById("mainContentArea").innerHTML =
             "<p>No cars found for your account.</p>";
+        document.getElementById("totalModels").innerText = "0";
+        document.getElementById("totalStock").innerText = "0";
         return;
     }
 
-    let tableHTML = `
-      <div class="table-container" id="carTable">
-        <table>
-          <thead>
-            <tr>
-              <th>Brand</th>
-              <th>Model</th>
-              <th>Year</th>
-            </tr>
-          </thead>
-          <tbody>
+    // Update the counters from the stats returned by backend
+    document.getElementById("totalModels").innerText = data.modelCount;
+    document.getElementById("totalStock").innerText = data.totalInStock;
+
+    // Build table of cars
+    let carsHTML = `
+      <table>
+        <thead>
+          <tr>
+            <th>Brand</th><th>Model</th><th>Year</th><th>Mileage</th><th>Color</th><th>Price</th>
+          </tr>
+        </thead>
+        <tbody>
     `;
 
-    cars.forEach((car) => {
-        // Updated to use 'brand' property, not 'name'
-        tableHTML += `
+    data.cars.forEach((car) => {
+        carsHTML += `
         <tr>
           <td>${car.brand}</td>
           <td>${car.model}</td>
           <td>${car.year}</td>
+          <td>${car.mileage}</td>
+          <td>${car.color}</td>
+          <td>$${car.price}</td>
         </tr>
       `;
     });
 
-    tableHTML += `
-          </tbody>
-        </table>
-      </div>
-    `;
+    carsHTML += "</tbody></table>";
 
-    document.getElementById("mainContentArea").innerHTML = tableHTML;
+    document.getElementById("mainContentArea").innerHTML = carsHTML;
 }
 
 // Helper to set active nav class

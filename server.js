@@ -73,15 +73,60 @@ app.get("/mycars", (req, res) => {
 
     const userId = req.session.userId;
 
+    // First, fetch user info (e.g., username)
     db.query(
-        "SELECT brand, model, year FROM cars WHERE user_id = ?",
+        "SELECT username FROM users WHERE id = ?",
         [userId],
-        (err, carResults) => {
-            if (err) {
-                console.error("Database error:", err);
-                return res.status(500).json({ error: "Database error" });
+        (userErr, userResults) => {
+            if (userErr || userResults.length === 0) {
+                console.error("User lookup failed:", userErr);
+                return res
+                    .status(500)
+                    .json({ error: "Failed to fetch user info" });
             }
-            res.json(carResults);
+
+            const username = userResults[0].username;
+
+            // Now, fetch car stats and car list
+            db.query(
+                `SELECT 
+                    COUNT(DISTINCT model) AS modelCount,
+                    COUNT(*) AS totalInStock
+                 FROM cars 
+                 WHERE user_id = ?`,
+                [userId],
+                (countErr, countResults) => {
+                    if (countErr) {
+                        console.error("Stats query failed:", countErr);
+                        return res
+                            .status(500)
+                            .json({ error: "Failed to fetch car stats" });
+                    }
+
+                    const stats = countResults[0];
+
+                    db.query(
+                        "SELECT brand, model, year, mileage, color, price FROM cars WHERE user_id = ?",
+                        [userId],
+                        (carErr, carResults) => {
+                            if (carErr) {
+                                console.error("Car fetch failed:", carErr);
+                                return res
+                                    .status(500)
+                                    .json({ error: "Failed to fetch cars" });
+                            }
+
+                            // Send response
+                            res.json({
+                                username,
+                                modelCount: stats.modelCount,
+                                totalInStock: stats.totalInStock,
+                                cars: carResults,
+                            });
+                        }
+                    );
+                }
+            );
         }
     );
 });
@@ -147,15 +192,16 @@ app.post("/signup", (req, res) => {
 });
 
 app.get("/profile", (req, res) => {
-    if (req.session.loggedin) {
-        res.json({
-            username: req.session.username,
-            email: `${req.session.username.toLowerCase()}@example.com`,
-            memberSince: "Jan 12, 2024",
-        });
-    } else {
-        res.status(401).json({ error: "Unauthorized" });
+    const user = req.session.user;
+    if (!user) {
+        return res.status(401).json({ error: "Unauthorized" });
     }
+
+    res.json({
+        username: user.username,
+        email: user.email,
+        memberSince: user.createdAt.toDateString(),
+    });
 });
 
 app.listen(3000, () => {
