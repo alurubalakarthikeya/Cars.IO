@@ -259,10 +259,6 @@ td {
 }
 
 @media (min-width: 992px) {
-    body {
-        overflow: hidden;
-    }
-
     .side-by-side {
         display: flex;
         justify-content: space-around;

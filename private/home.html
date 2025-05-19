@@ -1,13 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>CarIO | Home</title>
   <link rel="stylesheet" href="home.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter&family=Montserrat&family=Raleway&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter&family=Montserrat&family=Raleway&display=swap"
+    rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
+
 <body>
   <div class="home-container">
     <nav class="sidebar">
@@ -61,16 +64,18 @@
         <h2>Add New Car</h2>
         <form id="addCarForm">
           <label>Car Name</label>
-          <input type="text" name="carName" required />
+          <input id="carName" name="carName" type="text" required />
           <label>Model</label>
-          <input type="text" name="model" required />
+          <input id="carModel" name="model" type="text" required />
           <label>Year</label>
-          <input type="number" name="year" required />
+          <input id="carYear" name="year" type="number" required />
           <label>Price</label>
-          <input type="text" name="price" required />
-          <label>Stock</label>
-          <input type="number" name="stock" required /><br>
-          <button type="submit" class="add-car-btn openModalBtn">Add Car</button>
+          <input id="carPrice" name="price" type="text" required />
+          <label for="carColor">Color</label>
+          <input type="text" id="carColor" name="color" />
+          <label for="carMileage">Mileage</label>
+          <input type="text" id="carMileage" name="mileage" />
+          <button type="submit" class="add-car-btn">Add Car</button>
         </form>
       </div>
     </div>
@@ -83,9 +88,10 @@
             <p>Here’s your live car stock summary. Stay on track!</p>
           </div>
           <div class="greeting-stats">
-            <p><i class="fa-solid fa-car"></i> <strong>10</strong> Models</p>
-            <p><i class="fa-solid fa-boxes-stacked"></i> <strong>128</strong> In Stock</p>
+            <p><i class="fa-solid fa-car"></i> <strong id="totalModels">0</strong> Models</p>
+            <p><i class="fa-solid fa-boxes-stacked"></i> <strong id="totalStock">0</strong> In Stock</p>
           </div>
+
         </div>
         <div id="mainView">
           <div id="mainContentArea">
@@ -96,11 +102,11 @@
       <div class="side-info">
         <div class="info-card glass-box">
           <h3>Quick Stats</h3>
-          <p><strong>Total Stock:</strong> 128</p>
-          <p><strong>Total Worth:</strong> $432,890</p>
-          <p><strong>Top Model:</strong> BMW X5</p>
-          <p><strong>Most Expensive:</strong> $60,000</p>
-          <p><strong>Most Affordable:</strong> $26,000</p>
+          <p><strong>Total Stock:</strong> <span id="quickTotalStock">0</span></p>
+          <p><strong>Total Worth:</strong> $<span id="quickTotalWorth">0</span></p>
+          <p><strong>Top Model:</strong> <span id="quickTopModel">N/A</span></p>
+          <p><strong>Most Expensive:</strong> $<span id="quickMostExpensive">0</span></p>
+          <p><strong>Most Affordable:</strong> $<span id="quickMostAffordable">0</span></p>
           <button class="add-car-btn openModalBtn" id="openModalBtn">+ Add New Car</button>
         </div><br>
         <div class="info-card">
@@ -124,12 +130,13 @@
               <li>BMW i4 <i class="fa-solid fa-fire blue"></i></li>
               <li>Toyota Corolla <i class="fa-solid fa-fire blue"></i></li>
             </ul>
-          </div> 
-        </div>                      
+          </div>
+        </div>
       </div>
-      <br><br> 
+      <br><br>
     </div>
   </div>
-<script src="/script.js" defer></script>
+  <script src="/script.js" defer></script>
 </body>
+
 </html>
