@@ -64,16 +64,18 @@
         <h2>Add New Car</h2>
         <form id="addCarForm">
           <label>Car Name</label>
-          <input type="text" name="carName" required />
+          <input id="carName" name="carName" type="text" required />
           <label>Model</label>
-          <input type="text" name="model" required />
+          <input id="carModel" name="model" type="text" required />
           <label>Year</label>
-          <input type="number" name="year" required />
+          <input id="carYear" name="year" type="number" required />
           <label>Price</label>
-          <input type="text" name="price" required />
-          <label>Stock</label>
-          <input type="number" name="stock" required /><br>
-          <button type="submit" class="add-car-btn openModalBtn">Add Car</button>
+          <input id="carPrice" name="price" type="text" required />
+          <label for="carColor">Color</label>
+          <input type="text" id="carColor" name="color" />
+          <label for="carMileage">Mileage</label>
+          <input type="text" id="carMileage" name="mileage" />
+          <button type="submit" class="add-car-btn">Add Car</button>
         </form>
       </div>
     </div>
@@ -100,11 +102,11 @@
       <div class="side-info">
         <div class="info-card glass-box">
           <h3>Quick Stats</h3>
-          <p><strong>Total Stock:</strong> 128</p>
-          <p><strong>Total Worth:</strong> $432,890</p>
-          <p><strong>Top Model:</strong> BMW X5</p>
-          <p><strong>Most Expensive:</strong> $60,000</p>
-          <p><strong>Most Affordable:</strong> $26,000</p>
+          <p><strong>Total Stock:</strong> <span id="quickTotalStock">0</span></p>
+          <p><strong>Total Worth:</strong> $<span id="quickTotalWorth">0</span></p>
+          <p><strong>Top Model:</strong> <span id="quickTopModel">N/A</span></p>
+          <p><strong>Most Expensive:</strong> $<span id="quickMostExpensive">0</span></p>
+          <p><strong>Most Affordable:</strong> $<span id="quickMostAffordable">0</span></p>
           <button class="add-car-btn openModalBtn" id="openModalBtn">+ Add New Car</button>
         </div><br>
         <div class="info-card">
