@@ -1,3 +1,4 @@
+create database carsdb;
 use carsdb;
 CREATE TABLE IF NOT EXISTS users (
   id INT AUTO_INCREMENT PRIMARY KEY,
@@ -72,8 +73,3 @@ INSERT INTO user_cars (user_id, car_id) VALUES
 (2, 6),
 (1, 7),
 (1, 8);
-
-
-
-
-
