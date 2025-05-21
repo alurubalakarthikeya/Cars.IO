@@ -637,6 +637,69 @@ async function loadUserCars() {
     }
 }
 
+// Admin view
+async function loadAdminView() {
+    try {
+        const res = await fetch("/admin/users-with-cars", {
+            credentials: "include",
+        });
+        if (!res.ok) throw new Error("Access denied");
+
+        const data = await res.json();
+        let html = `<div class="admin-dashboard">
+                      <h2 class="admin-header">All Users & Their Cars</h2>`;
+
+        for (const [username, info] of Object.entries(data)) {
+            html += `
+                <div class="admin-user-card">
+                    <h3>${username} <span class="admin-user-email">&lt;${
+                info.email
+            }&gt;</span></h3>
+                    ${
+                        info.cars.length === 0
+                            ? "<p class='no-cars'>No cars linked.</p>"
+                            : `<table class="admin-car-table">
+                                <thead>
+                                    <tr>
+                                        <th>Brand</th>
+                                        <th>Model</th>
+                                        <th>Year</th>
+                                        <th>Mileage</th>
+                                        <th>Color</th>
+                                        <th>Price</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    ${info.cars
+                                        .map(
+                                            (car) => `
+                                        <tr>
+                                            <td>${car.brand}</td>
+                                            <td>${car.model}</td>
+                                            <td>${car.year}</td>
+                                            <td>${car.mileage}</td>
+                                            <td>${car.color}</td>
+                                            <td>$${car.price}</td>
+                                        </tr>
+                                    `
+                                        )
+                                        .join("")}
+                                </tbody>
+                              </table>`
+                    }
+                </div>
+            `;
+        }
+
+        html += "</div>";
+        document.getElementById("mainContentArea").innerHTML = html;
+    } catch (err) {
+        console.error("Failed to load admin view:", err.message);
+        document.getElementById("mainContentArea").innerHTML =
+            "<p>Access denied or error fetching data.</p>";
+    }
+}
+
 // Helper to set active nav class
 function setActive(navId) {
     document
@@ -681,6 +744,12 @@ document.addEventListener("click", function (e) {
     }
 });
 
+// navAdmin view event handler
+document.getElementById("navAdminView")?.addEventListener("click", () => {
+    loadAdminView();
+    setActive("navAdminView");
+});
+
 // Initial page load
 window.onload = () => {
     // Check if we are on the home page by checking for a known element
@@ -704,4 +773,26 @@ window.onload = () => {
                 );
             });
     }
+
+    fetch("/profile", { credentials: "include" })
+        .then((res) => res.json())
+        .then((data) => {
+            if (data.username && document.getElementById("navAdminView")) {
+                // Try fetch admin data to check if user is admin
+                fetch("/admin/users-with-cars", {
+                    credentials: "include",
+                }).then((r) => {
+                    if (r.ok) {
+                        document.getElementById("navAdminView").style.display =
+                            "block";
+                    }
+                });
+            }
+        });
+
+    fetch("/admin/users-with-cars", { credentials: "include" }).then((r) => {
+        if (r.ok) {
+            document.getElementById("navAdminView").classList.remove("hidden");
+        }
+    });
 };
