@@ -23,6 +23,50 @@ app.get("/", (req, res) => {
     res.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
+app.get("/admin/users-with-cars", (req, res) => {
+    if (!req.session.loggedin || !req.session.isAdmin) {
+        return res.status(403).json({ error: "Access denied" });
+    }
+
+    const query = `
+        SELECT u.username, u.email, c.brand, c.model, c.year, c.mileage, c.color, c.price
+        FROM users u
+        LEFT JOIN user_cars uc ON u.id = uc.user_id
+        LEFT JOIN cars c ON uc.car_id = c.car_id
+        ORDER BY u.username;
+    `;
+
+    db.query(query, (err, results) => {
+        if (err) {
+            console.error("Admin fetch error:", err);
+            return res.status(500).json({ error: "Database error" });
+        }
+
+        // Group cars by user
+        const users = {};
+        results.forEach((row) => {
+            if (!users[row.username]) {
+                users[row.username] = {
+                    email: row.email,
+                    cars: [],
+                };
+            }
+            if (row.brand) {
+                users[row.username].cars.push({
+                    brand: row.brand,
+                    model: row.model,
+                    year: row.year,
+                    mileage: row.mileage,
+                    color: row.color,
+                    price: row.price,
+                });
+            }
+        });
+
+        res.json(users);
+    });
+});
+
 app.post("/auth", (req, res) => {
     const { username, password } = req.body;
 
@@ -55,6 +99,7 @@ app.post("/auth", (req, res) => {
             req.session.loggedin = true;
             req.session.username = username;
             req.session.userId = user.id;
+            req.session.isAdmin = user.is_admin;
             res.redirect("/home");
         }
     );

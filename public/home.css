@@ -638,3 +638,67 @@ td {
     background-color: #1665d8;
     color: white;
 }
+
+/* Admin Dashboard */
+.admin-dashboard {
+    padding: 20px;
+    font-family: "Inter", sans-serif;
+}
+
+.admin-header {
+    font-size: 28px;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #333;
+    padding-bottom: 10px;
+}
+
+.admin-user-card {
+    background: #f9f9f9;
+    padding: 15px;
+    margin-bottom: 25px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.admin-user-card h3 {
+    margin-bottom: 10px;
+    font-size: 20px;
+    color: #2c3e50;
+}
+
+.admin-user-email {
+    font-size: 14px;
+    color: #888;
+}
+
+.admin-car-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+.admin-car-table th,
+.admin-car-table td {
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    text-align: left;
+}
+
+.admin-car-table th {
+    background-color: #f0f0f0;
+}
+
+.no-cars {
+    color: #c0392b;
+    font-style: italic;
+}
+
+/* Sidebar admin nav styling */
+#navMenu li.admin-nav {
+    color: #d35400;
+    font-weight: bold;
+}
+
+#navMenu li.admin-nav:hover {
+    background-color: #f7d7ba;
+}
