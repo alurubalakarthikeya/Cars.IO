@@ -659,33 +659,40 @@ async function loadAdminView() {
                         info.cars.length === 0
                             ? "<p class='no-cars'>No cars linked.</p>"
                             : `<table class="admin-car-table">
-                                <thead>
-                                    <tr>
-                                        <th>Brand</th>
-                                        <th>Model</th>
-                                        <th>Year</th>
-                                        <th>Mileage</th>
-                                        <th>Color</th>
-                                        <th>Price</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    ${info.cars
-                                        .map(
-                                            (car) => `
-                                        <tr>
-                                            <td>${car.brand}</td>
-                                            <td>${car.model}</td>
-                                            <td>${car.year}</td>
-                                            <td>${car.mileage}</td>
-                                            <td>${car.color}</td>
-                                            <td>$${car.price}</td>
-                                        </tr>
-                                    `
-                                        )
-                                        .join("")}
-                                </tbody>
-                              </table>`
+    <thead>
+        <tr>
+            <th>Brand</th>
+            <th>Model</th>
+            <th>Year</th>
+            <th>Mileage</th>
+            <th>Color</th>
+            <th>Price</th>
+            <th>Salesperson</th>
+            <th>Salesperson ID</th>
+            <th>Transaction #</th>
+        </tr>
+    </thead>
+    <tbody>
+        ${info.cars
+            .map(
+                (car) => `
+            <tr>
+                <td>${car.brand}</td>
+                <td>${car.model}</td>
+                <td>${car.year}</td>
+                <td>${car.mileage}</td>
+                <td>${car.color}</td>
+                <td>$${car.price}</td>
+                <td>${car.salesperson_name || "-"}</td>
+                <td>${car.salesperson_id || "-"}</td>
+                <td>${car.transaction_number || "-"}</td>
+            </tr>
+        `
+            )
+            .join("")}
+    </tbody>
+</table>
+`
                     }
                 </div>
             `;

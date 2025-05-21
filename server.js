@@ -29,12 +29,16 @@ app.get("/admin/users-with-cars", (req, res) => {
     }
 
     const query = `
-        SELECT u.username, u.email, c.brand, c.model, c.year, c.mileage, c.color, c.price
-        FROM users u
-        LEFT JOIN user_cars uc ON u.id = uc.user_id
-        LEFT JOIN cars c ON uc.car_id = c.car_id
-        ORDER BY u.username;
-    `;
+    SELECT 
+        u.username, u.email, 
+        c.brand, c.model, c.year, c.mileage, c.color, c.price,
+        t.salesperson_name, t.salesperson_id, t.transaction_number
+    FROM users u
+    LEFT JOIN user_cars uc ON u.id = uc.user_id
+    LEFT JOIN cars c ON uc.car_id = c.car_id
+    LEFT JOIN transactions t ON t.user_id = u.id AND t.car_id = c.car_id
+    ORDER BY u.username;
+`;
 
     db.query(query, (err, results) => {
         if (err) {
@@ -59,6 +63,9 @@ app.get("/admin/users-with-cars", (req, res) => {
                     mileage: row.mileage,
                     color: row.color,
                     price: row.price,
+                    salesperson_name: row.salesperson_name,
+                    salesperson_id: row.salesperson_id,
+                    transaction_number: row.transaction_number,
                 });
             }
         });
