@@ -1,42 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="login.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <title>CarIO | Login or Register</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="login.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <title>CarIO | Login or Register</title>
 </head>
+
 <body>
-    <div class="main-screen">
-        <h2 class="logo">CarIO <i class="fa-solid fa-car-side" id="car"></i></h2>
-        <div class="left-half">
-          <div class="welcome-text glass-box">
-            <h1>Welcome to Car.IO</h1>
-            <p>Where all the information can be stored with trust and simple UI. Join us and experience the best in car management.</p>
-            <p>Simple. Reliable. Efficient.</p>
-            <h3>Connect with us</h3>
-            <div class="social-icons">
-              <i class="fab fa-facebook"></i>
-              <i class="fab fa-twitter"></i>
-              <i class="fab fa-instagram"></i>
-              <i class="fab fa-linkedin"></i>
-            </div>
-          </div>
+  <div class="main-screen">
+    <h2 class="logo">CarIO <i class="fa-solid fa-car-side" id="car"></i></h2>
+    <div class="left-half">
+      <div class="welcome-text glass-box">
+        <h1>Welcome to Car.IO</h1>
+        <p>Where all the information can be stored with trust and simple UI. Join us and experience the best in car
+          management.</p>
+        <p>Simple. Reliable. Efficient.</p>
+        <h3>Connect with us</h3>
+        <div class="social-icons">
+          <i class="fab fa-facebook"></i>
+          <i class="fab fa-twitter"></i>
+          <i class="fab fa-instagram"></i>
+          <i class="fab fa-linkedin"></i>
         </div>
-        <div class="right-half">
-          <form class="login-form" id="loginForm" action="/auth" method="POST">
-            <h2>Login Car.IO</h2>
-            <label>Username:</label>
-            <input type="text" name="username" id="username" required />
-            <label>Password:</label>
-            <input type="password" name="password" id="password" required />
-            <p class="yes-sir"><a href="reset-password.html">Forgot password</a></p>
-            <button type="submit">Login</button>
-            <p class="yes-sir">Don't have an account? <a href="#" id="showRegister">Register here</a></p>
-          </form>
-        </div>
+      </div>
     </div>
-<script src="script.js"></script>
+    <div class="right-half">
+      <form class="login-form" id="loginForm" action="/auth" method="POST">
+        <h2>Login Car.IO</h2>
+        <label>Username:</label>
+        <input type="text" name="username" id="username" required />
+        <label>Password:</label>
+        <input type="password" name="password" id="password" required />
+        <p class="yes-sir"><a href="reset-password.html">Forgot password</a></p>
+        <button type="submit">Login</button>
+        <p class="yes-sir">Don't have an account? <a href="#" id="showRegister">Register here</a></p>
+      </form>
+    </div>
+  </div>
+  <script src="script.js"></script>
 </body>
+
 </html>

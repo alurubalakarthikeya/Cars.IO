@@ -26,29 +26,38 @@ app.get("/", (req, res) => {
 app.post("/auth", (req, res) => {
     const { username, password } = req.body;
 
-    if (username && password) {
-        db.query(
-            "SELECT * FROM users WHERE username = ? AND password = ?",
-            [username, password],
-            (err, results) => {
-                if (err) {
-                    console.error("DB error:", err);
-                    return res.status(500).send("Database error");
-                }
-
-                if (results.length > 0) {
-                    req.session.loggedin = true;
-                    req.session.username = username;
-                    req.session.userId = results[0].id;
-                    return res.redirect("/home");
-                } else {
-                    return res.send("Incorrect Username or Password");
-                }
-            }
-        );
-    } else {
-        res.send("Please enter Username and Password");
+    if (!username || !password) {
+        return res.send("Please enter Username and Password");
     }
+
+    // First check if user exists
+    db.query(
+        "SELECT * FROM users WHERE username = ?",
+        [username],
+        (err, results) => {
+            if (err) {
+                console.error("DB error:", err);
+                return res.status(500).send("Database error");
+            }
+
+            if (results.length === 0) {
+                return res.status(401).send("User does not exist");
+            }
+
+            const user = results[0];
+
+            // Check password
+            if (user.password !== password) {
+                return res.status(401).send("Incorrect password");
+            }
+
+            // Login successful
+            req.session.loggedin = true;
+            req.session.username = username;
+            req.session.userId = user.id;
+            res.redirect("/home");
+        }
+    );
 });
 
 app.get("/home", (req, res) => {
@@ -149,6 +158,24 @@ app.get("/mycars", (req, res) => {
     );
 });
 
+app.get("/allcars", (req, res) => {
+    if (!req.session.loggedin) {
+        return res.status(401).json({ error: "Unauthorized" });
+    }
+
+    db.query(
+        "SELECT brand, model, year, mileage, color, price, stock FROM cars",
+        (err, results) => {
+            if (err) {
+                console.error("Failed to fetch all cars:", err);
+                return res.status(500).json({ error: "Database error" });
+            }
+
+            res.json({ cars: results });
+        }
+    );
+});
+
 // Optional: Add car route to support adding cars (brand, model, year)
 app.post("/addcar", (req, res) => {
     if (!req.session.loggedin) {
@@ -170,69 +197,207 @@ app.post("/addcar", (req, res) => {
         return res.status(400).json({ error: "Missing car data" });
     }
 
-    // Insert into cars first
+    // Step 1: Check if the car already exists
     db.query(
-        "INSERT INTO cars (brand, model, year, mileage, color, price, stock) VALUES (?, ?, ?, ?, ?, ?, ?)",
-        [brand, model, year, mileage, color, price, stock],
-        (err, result) => {
+        "SELECT car_id FROM cars WHERE brand = ? AND model = ? AND year = ?",
+        [brand, model, year],
+        (err, results) => {
             if (err) {
-                console.error("DB insert error:", err);
+                console.error("DB lookup error:", err);
                 return res.status(500).json({ error: "Database error" });
             }
 
-            const newCarId = result.insertId;
+            if (results.length > 0) {
+                // Car exists, get car_id
+                const existingCarId = results[0].car_id;
 
-            // Now link the car to the user in user_cars table
+                // Step 2: Link this car to the user if not linked already
+                db.query(
+                    "SELECT * FROM user_cars WHERE user_id = ? AND car_id = ?",
+                    [userId, existingCarId],
+                    (linkErr, linkResults) => {
+                        if (linkErr) {
+                            console.error(
+                                "User-car link check error:",
+                                linkErr
+                            );
+                            return res
+                                .status(500)
+                                .json({ error: "Database error" });
+                        }
+
+                        if (linkResults.length > 0) {
+                            // Already linked
+                            return res
+                                .status(400)
+                                .json({ error: "Car already linked to user" });
+                        } else {
+                            // Insert link
+                            db.query(
+                                "INSERT INTO user_cars (user_id, car_id) VALUES (?, ?)",
+                                [userId, existingCarId],
+                                (insertLinkErr) => {
+                                    if (insertLinkErr) {
+                                        console.error(
+                                            "Link insert error:",
+                                            insertLinkErr
+                                        );
+                                        return res.status(500).json({
+                                            error: "Failed to link car to user",
+                                        });
+                                    }
+                                    return res.status(200).json({
+                                        message:
+                                            "Car linked to user successfully",
+                                    });
+                                }
+                            );
+                        }
+                    }
+                );
+            } else {
+                // Car doesn't exist, insert new car
+                db.query(
+                    "INSERT INTO cars (brand, model, year, mileage, color, price, stock) VALUES (?, ?, ?, ?, ?, ?, ?)",
+                    [brand, model, year, mileage, color, price, stock],
+                    (insertErr, insertResult) => {
+                        if (insertErr) {
+                            console.error("DB insert error:", insertErr);
+                            return res
+                                .status(500)
+                                .json({ error: "Database error" });
+                        }
+
+                        const newCarId = insertResult.insertId;
+
+                        // Link new car to user
+                        db.query(
+                            "INSERT INTO user_cars (user_id, car_id) VALUES (?, ?)",
+                            [userId, newCarId],
+                            (linkErr) => {
+                                if (linkErr) {
+                                    console.error(
+                                        "User-car link error:",
+                                        linkErr
+                                    );
+                                    return res.status(500).json({
+                                        error: "Failed to link car to user",
+                                    });
+                                }
+
+                                res.status(200).json({
+                                    message:
+                                        "Car added and linked successfully",
+                                });
+                            }
+                        );
+                    }
+                );
+            }
+        }
+    );
+});
+
+app.post("/changepassword", (req, res) => {
+    const userId = req.session.userId;
+    const { currentPassword, newPassword } = req.body;
+
+    if (!userId) {
+        return res.status(401).json({ error: "Unauthorized" });
+    }
+
+    db.query(
+        "SELECT password FROM users WHERE id = ?",
+        [userId],
+        (err, results) => {
+            if (err || results.length === 0) {
+                return res
+                    .status(500)
+                    .json({ error: "Database error or user not found" });
+            }
+
+            const storedPassword = results[0].password;
+            if (storedPassword !== currentPassword) {
+                return res
+                    .status(400)
+                    .json({ error: "Incorrect current password" });
+            }
+
             db.query(
-                "INSERT INTO user_cars (user_id, car_id) VALUES (?, ?)",
-                [userId, newCarId],
-                (linkErr) => {
-                    if (linkErr) {
-                        console.error("User-car link error:", linkErr);
+                "UPDATE users SET password = ? WHERE id = ?",
+                [newPassword, userId],
+                (updateErr) => {
+                    if (updateErr) {
+                        console.error("Password update error:", updateErr);
                         return res
                             .status(500)
-                            .json({ error: "Failed to link car to user" });
+                            .json({ error: "Failed to update password" });
                     }
 
-                    res.status(200).json({ message: "Car added successfully" });
+                    return res.json({
+                        message: "Password updated successfully",
+                    });
                 }
             );
         }
     );
 });
 
-app.post("/signup", (req, res) => {
-    const { username, password } = req.body;
+app.delete("/deleteaccount", (req, res) => {
+    const userId = req.session.userId;
 
-    if (username && password) {
-        db.query(
-            "SELECT * FROM users WHERE username = ?",
-            [username],
-            (err, results) => {
-                if (err) {
-                    console.error("DB error:", err);
-                    return res.status(500).send("Database error");
-                }
-                if (results.length > 0) {
-                    return res.send("Username already taken");
-                } else {
-                    db.query(
-                        "INSERT INTO users (username, password) VALUES (?, ?)",
-                        [username, password],
-                        (err) => {
-                            if (err) {
-                                console.error("DB insert error:", err);
-                                return res.status(500).send("Database error");
-                            }
-                            return res.send("User registered successfully!");
-                        }
-                    );
-                }
-            }
-        );
-    } else {
-        res.send("Please enter Username and Password");
+    if (!userId) {
+        return res.status(401).json({ error: "Unauthorized" });
     }
+
+    // Optional: You may want to delete from user_cars or other related tables first if FK constraints exist
+    db.query("DELETE FROM users WHERE id = ?", [userId], (err) => {
+        if (err) {
+            console.error("Delete account error:", err);
+            return res.status(500).json({ error: "Failed to delete account" });
+        }
+
+        // Destroy session after deletion
+        req.session.destroy(() => {
+            res.json({ message: "Account deleted successfully" });
+        });
+    });
+});
+
+app.post("/signup", (req, res) => {
+    const { username, password, email } = req.body;
+
+    if (!username || !password || !email) {
+        return res.send("Please enter Username, Email, and Password");
+    }
+
+    db.query(
+        "SELECT * FROM users WHERE username = ?",
+        [username],
+        (err, results) => {
+            if (err) {
+                console.error("Error checking username:", err);
+                return res.status(500).send("Database error (username check)");
+            }
+
+            if (results.length > 0) {
+                return res.send("Username already taken");
+            }
+
+            db.query(
+                "INSERT INTO users (username, password, email) VALUES (?, ?, ?)",
+                [username, password, email],
+                (insertErr) => {
+                    if (insertErr) {
+                        console.error("Error inserting user:", insertErr);
+                        /* return res.status(500).send("Database error (insert)"); */
+                    }
+
+                    return res.send("User registered successfully!");
+                }
+            );
+        }
+    );
 });
 
 app.get("/profile", (req, res) => {
