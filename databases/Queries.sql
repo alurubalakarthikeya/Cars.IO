@@ -10,6 +10,14 @@ CREATE TABLE IF NOT EXISTS users (
 describe users;
 select * from users;
 update users set created_at = CURRENT_TIMESTAMP;
+ALTER TABLE users AUTO_INCREMENT = 3;
+
+ALTER TABLE users ADD COLUMN is_admin BOOLEAN DEFAULT FALSE;
+UPDATE users SET is_admin = TRUE WHERE username = 'admin';
+
+
+
+delete from users where id=3;
 
 CREATE TABLE IF NOT EXISTS cars (
   car_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -24,8 +32,9 @@ CREATE TABLE IF NOT EXISTS cars (
 
 describe cars;
 select * from cars ;
-ALTER TABLE cars AUTO_INCREMENT = 9;
+ALTER TABLE cars AUTO_INCREMENT = 10;
 
+delete from cars where car_id=14;
 
 CREATE TABLE IF NOT EXISTS user_cars (
   user_id INT NOT NULL,
@@ -36,7 +45,8 @@ CREATE TABLE IF NOT EXISTS user_cars (
 );
 describe user_cars;
 
-
+select * from user_cars;
+delete from user_cars where user_id = '2' and car_id='9';
 
 
 
