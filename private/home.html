@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>CarIO | Home</title>
   <link rel="stylesheet" href="home.css" />
+  <link rel="shortcut icon" href="../public/favicon.png" type="image/x-icon">
   <link href="https://fonts.googleapis.com/css2?family=Inter&family=Montserrat&family=Raleway&display=swap"
     rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -40,11 +41,12 @@
         <h2>Change Password</h2>
         <form id="changePasswordForm">
           <label>Current Password</label>
-          <input type="password" required />
+          <input type="password" id="currentPassword" required />
           <label>New Password</label>
-          <input type="password" required />
+          <input type="password" id="newPassword" required />
           <label>Confirm New Password</label>
-          <input type="password" required />
+          <input type="password" id="confirmPassword" required />
+          <div id="changePasswordMsg" style="margin-top:10px; font-weight:bold;"></div>
           <button type="submit" class="add-car-btn">Update Password</button>
         </form>
       </div>
@@ -118,18 +120,11 @@
           </div>
           <div class="low-stock">
             <h4>Low Stock Alerts</h4>
-            <ul>
-              <li>⚠ Ford Mustang (5 left)</li>
-              <li>⚠ Kia EV6 (6 left)</li>
-            </ul>
+            <ul id="low-stock-list"></ul>
           </div>
           <div class="recommendations">
             <h4>Recommended for You</h4>
-            <ul>
-              <li><i class="fa-solid fa-plus blue"></i> Tesla Model Y <i class="fa-solid fa-fire blue"></i></li>
-              <li><i class="fa-solid fa-plus blue"></i> BMW i4 <i class="fa-solid fa-fire blue"></i></li>
-              <li><i class="fa-solid fa-plus blue"></i> Toyota Corolla <i class="fa-solid fa-fire blue"></i></li>
-            </ul>
+            <ul id="recommendations-list"></ul>
           </div>
         </div>
       </div>
