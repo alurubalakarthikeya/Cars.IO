@@ -648,25 +648,6 @@ td {
     max-height: 530px;
 }
 
-.admin-dashboard::-webkit-scrollbar {
-    width: 7px;
-    height: 40px;
-}
-
-.admin-dashboard::-webkit-scrollbar-track {
-    background: rgba(0, 0, 0, 0.05);
-    border-radius: 10px;
-}
-
-.admin-dashboard::-webkit-scrollbar-thumb {
-    background: rgba(109, 109, 109, 0.407);
-    border-radius: 10px;
-    box-shadow: inset 0 0 6px rgba(255, 255, 255, 0.3);
-    backdrop-filter: blur(4px);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    height: 50px;
-}
-
 .admin-header {
     font-size: 28px;
     margin-bottom: 20px;
@@ -697,14 +678,34 @@ td {
     width: 100%;
     border-collapse: collapse;
     margin-top: 10px;
+    overflow-x: auto;
+    display: block;
+    white-space: nowrap;
 }
 
 .admin-car-table th,
 .admin-car-table td {
     padding: 12px 15px;
-    min-width: 40px;
+    min-width: 120px; /* Ensures text doesn't overlap */
     border: 1px solid #ccc;
     text-align: left;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.admin-car-table-container {
+    overflow-x: auto;
+    max-width: 100%;
+}
+
+.admin-car-table::-webkit-scrollbar {
+    height: 8px;
+}
+
+.admin-car-table::-webkit-scrollbar-thumb {
+    background-color: rgba(100, 100, 100, 0.4);
+    border-radius: 10px;
 }
 
 .admin-car-table th {
@@ -732,4 +733,3 @@ td {
     -webkit-backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.1);
 }
-

@@ -658,7 +658,8 @@ async function loadAdminView() {
                     ${
                         info.cars.length === 0
                             ? "<p class='no-cars'>No cars linked.</p>"
-                            : `<table class="admin-car-table">
+                            : `<div class="admin-car-table-container">
+                            <table class="admin-car-table">
     <thead>
         <tr>
             <th>Brand</th>
@@ -692,6 +693,7 @@ async function loadAdminView() {
             .join("")}
     </tbody>
 </table>
+</div>
 `
                     }
                 </div>
