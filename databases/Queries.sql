@@ -49,6 +49,18 @@ select * from user_cars;
 delete from user_cars where user_id = '2' and car_id='9';
 
 
+CREATE TABLE transactions (
+    transaction_id INT PRIMARY KEY AUTO_INCREMENT,
+    user_id INT,
+    car_id INT,
+    salesperson_name VARCHAR(100),
+    salesperson_id VARCHAR(50),
+    transaction_number VARCHAR(50) UNIQUE,
+    transaction_date DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+
+
 
 -- Users table
 INSERT INTO users (id, username, password, email, created_at) VALUES
