@@ -639,16 +639,38 @@ td {
     color: white;
 }
 
-/* Admin Dashboard */
 .admin-dashboard {
     padding: 20px;
-    font-family: "Inter", sans-serif;
+    font-family: var(--primary-font);
+    font-weight: 200;
+    overflow-y: scroll;
+    color: var(--primary-color);
+    max-height: 530px;
+}
+
+.admin-dashboard::-webkit-scrollbar {
+    width: 7px;
+    height: 40px;
+}
+
+.admin-dashboard::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 10px;
+}
+
+.admin-dashboard::-webkit-scrollbar-thumb {
+    background: rgba(109, 109, 109, 0.407);
+    border-radius: 10px;
+    box-shadow: inset 0 0 6px rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    height: 50px;
 }
 
 .admin-header {
     font-size: 28px;
     margin-bottom: 20px;
-    border-bottom: 2px solid #333;
+    border-bottom: 2px solid var(--primary-color);
     padding-bottom: 10px;
 }
 
@@ -679,7 +701,8 @@ td {
 
 .admin-car-table th,
 .admin-car-table td {
-    padding: 8px 12px;
+    padding: 12px 15px;
+    min-width: 40px;
     border: 1px solid #ccc;
     text-align: left;
 }
@@ -693,12 +716,20 @@ td {
     font-style: italic;
 }
 
-/* Sidebar admin nav styling */
-#navMenu li.admin-nav {
-    color: #d35400;
-    font-weight: bold;
+#navMenu li.admin-nav:hover {
+    background-color: #4e7fb46c;
+    color: #ffffff;
 }
 
-#navMenu li.admin-nav:hover {
-    background-color: #f7d7ba;
+#navMenu li.logOut {
+    color: #d35400;
 }
+
+#navMenu li.logOut:hover {
+    font-weight: 500;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
