@@ -436,16 +436,55 @@ app.post("/signup", (req, res) => {
                 return res.send("Username already taken");
             }
 
+            // Insert user
             db.query(
                 "INSERT INTO users (username, password, email) VALUES (?, ?, ?)",
                 [username, password, email],
-                (insertErr) => {
+                (insertErr, result) => {
                     if (insertErr) {
                         console.error("Error inserting user:", insertErr);
-                        /* return res.status(500).send("Database error (insert)"); */
+                        return res.status(500).send("Database error (insert)");
                     }
 
-                    return res.send("User registered successfully!");
+                    const newUserId = result.insertId;
+
+                    // Auto-assign first car (by car_id asc)
+                    db.query(
+                        "SELECT car_id FROM cars ORDER BY car_id ASC LIMIT 1",
+                        (carErr, carResults) => {
+                            if (carErr || carResults.length === 0) {
+                                console.warn(
+                                    "No car found to auto-assign or query error:",
+                                    carErr
+                                );
+                                return res.send(
+                                    "User registered successfully, but no car assigned."
+                                );
+                            }
+
+                            const carId = carResults[0].car_id;
+
+                            db.query(
+                                "INSERT INTO user_cars (user_id, car_id) VALUES (?, ?)",
+                                [newUserId, carId],
+                                (linkErr) => {
+                                    if (linkErr) {
+                                        console.warn(
+                                            "Failed to link car to new user:",
+                                            linkErr
+                                        );
+                                        return res.send(
+                                            "User registered. Failed to assign a car."
+                                        );
+                                    }
+
+                                    return res.send(
+                                        "User registered successfully and car assigned!"
+                                    );
+                                }
+                            );
+                        }
+                    );
                 }
             );
         }
