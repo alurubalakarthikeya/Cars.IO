@@ -24,4 +24,3 @@ You can use these credentials to log in and explore:
 
 Username: admin
 Password: admin123
-
