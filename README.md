@@ -17,10 +17,3 @@
  🎨 **Profile Management** – Includes login history, recent actions, and more  
  🌐 **Responsive Design** – Works across all devices  
  🍄 **Access Control** – Routes like `/home` protected by login session
-
-## Test Credentials:
-
-You can use these credentials to log in and explore:
-
-Username: admin
-Password: admin123
